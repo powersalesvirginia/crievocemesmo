@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gerador de Comunicado — Novidade Ambev</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+  :root{
+    --blue-deep:   #071A4A;
+    --blue-mid:    #0E2C7A;
+    --blue-line:   #163B93;
+    --gold:        #FFC72C;
+    --gold-deep:   #E8A916;
+    --navy-text:   #0A1440;
+    --white:       #FFFFFF;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: 'Poppins', Arial, sans-serif;
+    background: #E7E2D3;
+    color: var(--navy-text);
+    min-height: 100vh;
+    padding: 32px 16px 80px;
+  }
+
+  .wrap {
+    max-width: 1220px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    gap: 32px;
+    align-items: start;
+  }
+  @media (max-width: 900px) { .wrap { grid-template-columns: 1fr; } }
+
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  .subtitle { font-size: 13px; color: #6b6455; margin: 0 0 24px; }
+
+  .panel {
+    background: #FFFDF8;
+    border: 1px solid #ddd5c1;
+    border-radius: 14px;
+    padding: 22px;
+  }
+
+  label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #8a8168;
+    margin: 18px 0 6px;
+  }
+  label:first-of-type { margin-top: 0; }
+
+  input[type="text"], textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #d8d0ba;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    background: #fff;
+  }
+  textarea { resize: vertical; min-height: 50px; }
+  input[type="file"] { width: 100%; font-size: 13px; padding: 8px 0; }
+
+  .file-drop {
+    border: 1.5px dashed #c9bf9e;
+    border-radius: 10px;
+    padding: 14px;
+    text-align: center;
+    background: #FBF8F1;
+  }
+
+  .count-toggle {
+    display: flex;
+    gap: 8px;
+  }
+  .count-btn {
+    flex: 1;
+    padding: 10px 8px;
+    border: 1px solid #d8d0ba;
+    background: #fff;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: inherit;
+    color: #6b6455;
+    cursor: pointer;
+  }
+  .count-btn.active {
+    background: var(--gold);
+    border-color: var(--gold-deep);
+    color: var(--navy-text);
+  }
+
+  .price-fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .price-fields label { margin: 18px 0 6px; }
+  .price-fields > div:first-child label { margin-top: 18px; }
+
+  .swatches { display: flex; gap: 8px; margin-top: 4px; }
+  .swatch {
+    width: 30px; height: 30px; border-radius: 8px;
+    border: 2px solid transparent;
+    cursor: pointer;
+  }
+  .swatch.active { border-color: #333; }
+
+  .btn {
+    margin-top: 24px;
+    width: 100%;
+    padding: 13px 16px;
+    background: var(--gold);
+    color: var(--navy-text);
+    border: none;
+    border-radius: 9px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 0.02em;
+  }
+  .btn:hover { background: var(--gold-deep); }
+  .hint { font-size: 12px; color: #8a8168; margin-top: 10px; line-height: 1.5; }
+
+  /* ---------------- CARD ---------------- */
+  .stage { display: flex; justify-content: center; }
+
+  #card {
+    width: 760px;
+    max-width: 100%;
+    aspect-ratio: 4 / 5.6;
+    position: relative;
+    border-radius: 26px;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 15% 8%, rgba(255,255,255,0.10), transparent 40%),
+      radial-gradient(ellipse at 80% 100%, rgba(255,255,255,0.05), transparent 55%),
+      linear-gradient(160deg, var(--blue-mid) 0%, var(--blue-deep) 70%);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.3);
+  }
+
+  /* subtle dot texture */
+  .dots {
+    position: absolute; inset: 0;
+    background-image: radial-gradient(rgba(255,255,255,0.06) 1.4px, transparent 1.4px);
+    background-size: 16px 16px;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  .glow-ring {
+    position: absolute;
+    width: 480px; height: 480px;
+    border-radius: 50%;
+    border: 10px solid rgba(255,255,255,0.05);
+    top: -180px; right: -160px;
+    pointer-events: none;
+  }
+
+  .brand-logo {
+    position: absolute;
+    top: 22px;
+    left: 28px;
+    width: 168px;
+    z-index: 5;
+    opacity: 0.97;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.35));
+  }
+  .brand-logo svg { display: block; width: 100%; height: auto; }
+
+  .brand-logo-right {
+    position: absolute;
+    top: 26px;
+    right: 28px;
+    width: 118px;
+    z-index: 5;
+    opacity: 0.97;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.35));
+  }
+  .brand-logo-right img { display: block; width: 100%; height: auto; }
+
+  /* --- headline block --- */
+  .headline {
+    position: absolute;
+    top: 34px;
+    left: 0; right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 3;
+  }
+
+  .top-banner {
+    position: relative;
+    background: linear-gradient(180deg, var(--gold) 0%, var(--gold-deep) 100%);
+    color: var(--navy-text);
+    font-family: 'Anton', sans-serif;
+    font-size: 40px;
+    letter-spacing: 0.02em;
+    padding: 8px 46px 10px;
+    transform: skewX(-8deg) rotate(-2.5deg);
+    border-radius: 6px;
+    box-shadow:
+      0 6px 0 rgba(0,0,0,0.15),
+      0 10px 22px rgba(0,0,0,0.28);
+    text-transform: uppercase;
+    line-height: 1;
+    white-space: nowrap;
+  }
+  .top-banner span { display: inline-block; transform: skewX(8deg) rotate(2.5deg); }
+
+  .spark {
+    position: absolute;
+    width: 26px; height: 26px;
+    background: var(--gold);
+    clip-path: polygon(50% 0%, 61% 35%, 100% 50%, 61% 65%, 50% 100%, 39% 65%, 0% 50%, 39% 35%);
+  }
+  .spark.s1 { top: -6px; left: -14px; transform: rotate(-10deg) scale(0.8); }
+  .spark.s2 { bottom: -10px; right: -16px; transform: rotate(18deg) scale(0.65); }
+
+  .main-word {
+    font-family: 'Anton', sans-serif;
+    font-size: 74px;
+    color: var(--white);
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    line-height: 0.95;
+    margin-top: 6px;
+    transform: skewX(-8deg) rotate(-2.5deg);
+    -webkit-text-stroke: 2px var(--blue-deep);
+    text-shadow:
+      0 3px 0 var(--blue-line),
+      0 8px 0 rgba(0,0,0,0.25),
+      0 16px 26px rgba(0,0,0,0.35);
+    white-space: nowrap;
+    position: relative;
+  }
+
+  .burst {
+    position: absolute;
+    width: 30px; height: 30px;
+    background: var(--gold);
+    clip-path: polygon(50% 0%, 61% 35%, 100% 50%, 61% 65%, 50% 100%, 39% 65%, 0% 50%, 39% 35%);
+    top: 50%;
+    transform: translateY(-50%) rotate(8deg);
+  }
+  .burst.left { left: -8px; }
+  .burst.right { right: -8px; }
+
+  .swoosh {
+    width: 220px;
+    height: 14px;
+    margin-top: 10px;
+  }
+
+  /* --- photo stage (1 or 2 slots) --- */
+  .photo-stage {
+    position: absolute;
+    left: 42px; right: 42px;
+    top: 220px; bottom: 222px;
+    display: flex;
+    gap: 16px;
+  }
+  .photo-slot {
+    flex: 1;
+    min-width: 0;
+    background: #fff;
+    border-radius: 30px;
+    border: 5px solid var(--gold-deep);
+    box-shadow:
+      0 0 0 3px rgba(255,255,255,0.5) inset,
+      0 18px 40px rgba(0,0,0,0.3);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .photo-slot img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  .photo-placeholder {
+    color: #b9b2a0;
+    font-size: 15px;
+    text-align: center;
+    padding: 0 20px;
+    line-height: 1.6;
+    font-weight: 600;
+  }
+  .photo-stage.two .photo-placeholder { font-size: 13px; padding: 0 12px; }
+
+  /* --- name pills over bottom of the stage --- */
+  .name-row {
+    position: absolute;
+    left: 42px; right: 42px;
+    bottom: 178px;
+    display: flex;
+    gap: 16px;
+    z-index: 4;
+  }
+  .name-col {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    justify-content: center;
+  }
+  .name-pill {
+    background: linear-gradient(180deg, var(--gold) 0%, var(--gold-deep) 100%);
+    color: var(--navy-text);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 21px;
+    padding: 10px 28px;
+    border-radius: 999px;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.3);
+    text-align: center;
+    line-height: 1.25;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+  .name-row.two .name-pill {
+    font-size: 16px;
+    padding: 8px 18px;
+  }
+
+  /* --- price tags --- */
+  .price-row {
+    position: absolute;
+    left: 42px; right: 42px;
+    bottom: 96px;
+    display: flex;
+    gap: 16px;
+    z-index: 4;
+  }
+  .price-col {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    justify-content: center;
+  }
+  .price-tag {
+    background: rgba(255,255,255,0.10);
+    border: 1px solid rgba(255,199,44,0.45);
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    font-size: 17px;
+    font-weight: 600;
+    padding: 7px 18px;
+    border-radius: 12px;
+    text-align: center;
+    line-height: 1.35;
+    white-space: nowrap;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .price-tag .price-line { display: block; }
+  .price-tag .price-label {
+    color: var(--gold);
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    font-size: 0.82em;
+  }
+  .price-tag .price-currency {
+    color: var(--gold);
+    font-weight: 800;
+    font-size: 1.15em;
+    margin: 0 1px;
+  }
+  .price-row.two .price-tag { font-size: 14px; padding: 6px 13px; }
+
+  .desc-text {
+    position: absolute;
+    left: 50%;
+    bottom: 62px;
+    transform: translateX(-50%);
+    color: rgba(255,255,255,0.85);
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    max-width: 80%;
+    z-index: 4;
+  }
+
+  /* --- footer --- */
+  .footer-bar {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 56px;
+    background: rgba(0,0,0,0.22);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 34px;
+    border-top: 1px solid rgba(255,199,44,0.3);
+  }
+  .footer-bar .region {
+    color: var(--gold);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+  }
+  .footer-bar .date {
+    color: rgba(255,255,255,0.65);
+    font-size: 12px;
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="panel">
+    <h1>Comunicado de Novidade</h1>
+    <p class="subtitle">Preencha os campos → a arte à direita atualiza sozinha → baixe e envie no grupo.</p>
+
+    <label>Quantidade de produtos</label>
+    <div class="count-toggle">
+      <button type="button" class="count-btn active" id="countBtn1" data-count="1">1 produto</button>
+      <button type="button" class="count-btn" id="countBtn2" data-count="2">2 produtos</button>
+    </div>
+
+    <label>Foto do produto 1</label>
+    <div class="file-drop">
+      <input type="file" id="photoInput" accept="image/*">
+    </div>
+
+    <label>Nome do produto 1</label>
+    <input type="text" id="nameInput" placeholder="Ex: Skol Puro Malte 350ml" value="Nome do Produto">
+
+    <div class="price-fields">
+      <div>
+        <label>TTV (venda p/ cliente)</label>
+        <input type="text" id="ttvInput" placeholder="0,00">
+      </div>
+      <div>
+        <label>TTC (venda ao consumidor)</label>
+        <input type="text" id="ttcInput" placeholder="0,00">
+      </div>
+    </div>
+
+    <div id="product2Fields" style="display:none;">
+      <label>Foto do produto 2</label>
+      <div class="file-drop">
+        <input type="file" id="photoInput2" accept="image/*">
+      </div>
+
+      <label>Nome do produto 2</label>
+      <input type="text" id="nameInput2" placeholder="Ex: Brahma Duplo Malte 350ml" value="Nome do Produto 2">
+
+      <div class="price-fields">
+        <div>
+          <label>TTV (venda p/ cliente)</label>
+          <input type="text" id="ttvInput2" placeholder="0,00">
+        </div>
+        <div>
+          <label>TTC (venda ao consumidor)</label>
+          <input type="text" id="ttcInput2" placeholder="0,00">
+        </div>
+      </div>
+    </div>
+
+    <label>Palavra do banner (topo)</label>
+    <input type="text" id="topWord" value="NOVIDADE" maxlength="16">
+
+    <label>Palavra principal</label>
+    <input type="text" id="mainWord" value="CHEGOU!" maxlength="16">
+
+    <label>Descrição curta (opcional)</label>
+    <textarea id="descInput" placeholder="Ex: Já disponível para pedido no seu distribuidor."></textarea>
+
+    <label>Região / time (rodapé esquerdo)</label>
+    <input type="text" id="regionInput" value="Paraná · Ambev">
+
+    <label>Data (rodapé direito)</label>
+    <input type="text" id="dateInput" value="">
+
+    <label>Cor de destaque</label>
+    <div class="swatches">
+      <div class="swatch active" style="background:#FFC72C" data-color="#FFC72C" data-deep="#E8A916"></div>
+      <div class="swatch" style="background:#F2554C" data-color="#F2554C" data-deep="#C13A32"></div>
+      <div class="swatch" style="background:#3FBF7F" data-color="#3FBF7F" data-deep="#249A5D"></div>
+      <div class="swatch" style="background:#4E8EF7" data-color="#4E8EF7" data-deep="#2E67D6"></div>
+    </div>
+
+    <button class="btn" id="downloadBtn">Baixar imagem (PNG)</button>
+    <p class="hint">Dica: a imagem sai em formato retrato (ótima para status e grupos do WhatsApp). Depois de baixar, é só anexar no grupo normalmente.</p>
+  </div>
+
+  <div class="stage">
+    <div id="card">
+      <div class="dots"></div>
+      <div class="glow-ring"></div>
+      <div class="brand-logo">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 102" fill="none"><g clip-path="url(#lvclip)"><path d="M43.17 80.07H41.92C41.29 78.19 31.91 48.17 26.91 30.02C24.41 22.51 18.15 16.88 10.02 16.88H0C0.62 19.38 13.76 61.3 21.27 85.07C24.4 94.45 32.53 100.71 41.91 100.71C51.29 100.71 59.43 94.45 62.55 85.7C70.06 63.18 82.57 23.14 83.82 17.51H60.67C61.29 20.64 44.41 77.57 43.15 80.07" fill="#fff"></path><path d="M114.48 17.52H91.33V100.72H114.48V17.52Z" fill="#fff"></path><path d="M293.4 17.52H270.25V100.72H293.4V17.52Z" fill="#fff"></path><path d="M409.13 17.52H385.98V100.72H409.13V17.52Z" fill="#fff"></path><path d="M262.12 93.21V71.32C262.12 60.69 254.61 52.55 244.6 52.55H229.59V70.69H240.85V79.45C238.35 80.7 235.22 80.7 230.84 80.7C216.45 80.7 213.32 67.56 213.32 56.93C213.32 43.17 220.2 34.41 231.46 34.41C237.72 34.41 243.97 36.29 249.6 39.41L251.48 40.66L259.61 22.52L258.36 21.89C251.48 16.89 241.47 14.38 230.83 14.38C206.43 14.38 191.42 31.27 191.42 57.54C191.42 85.69 205.18 101.33 230.83 101.33C242.72 101.33 252.73 98.2 260.86 92.57L262.11 93.2L262.12 93.21Z" fill="#fff"></path><path d="M374.1 101.34V18.14H352.2V62.56C351.57 60.68 350.95 59.43 349.7 57.56L334.06 27.53C330.93 21.9 325.3 18.15 318.42 18.15H303.41V101.35H325.3V58.19C326.55 61.32 327.8 63.82 329.05 66.32L343.44 91.97C346.57 97.6 352.2 101.35 358.45 101.35H374.09L374.1 101.34Z" fill="#fff"></path><path d="M192.68 100.72L171.41 66.94C179.54 62.56 184.55 53.8 184.55 43.79C184.55 25.65 174.54 17.51 151.4 17.51H125.75V100.71H147.64V73.19H149.52C150.77 73.19 151.4 73.19 152.65 75.69L162.03 91.96C165.16 97.59 170.79 100.72 177.04 100.72H192.68ZM151.39 55.05H147.64V36.28H152.64C162.02 36.28 162.65 40.66 162.65 45.04C163.28 51.92 158.9 55.05 151.39 55.05Z" fill="#fff"></path><path d="M470.43 79.45C471.06 81.95 471.68 84.45 472.93 86.96C475.43 94.47 481.69 100.1 489.82 100.1H499.83C499.21 97.6 486.07 55.68 478.56 31.91C475.43 22.53 467.3 16.27 457.92 16.27C448.54 16.27 440.4 22.53 437.28 31.28C429.77 53.8 417.26 93.84 416.01 99.47H439.16C439.16 98.22 441.66 88.84 445.42 77.57V78.82H470.44V79.44L470.43 79.45ZM457.3 36.91C457.93 38.16 460.43 46.92 464.18 58.18H449.79C452.92 46.92 456.05 38.16 456.05 36.91H457.3Z" fill="#fff"></path><path d="M103.85 0H91.34V10.01H114.49C113.87 5.01 109.49 0 103.86 0" fill="#fff"></path><path d="M282.76 0H270.25V10.01H293.4C292.77 5.01 288.39 0 282.77 0" fill="#fff"></path><path d="M398.49 0H385.98V10.01H409.13C408.5 5.01 404.12 0 398.5 0" fill="#fff"></path></g><defs><clipPath id="lvclip"><rect width="499.84" height="101.34" fill="#fff"></rect></clipPath></defs></svg>
+      </div>
+      <div class="brand-logo-right">
+        <img src="data:image/png;base64,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" alt="Cervejaria Ambev">
+      </div>
+
+      <div class="headline">
+        <div class="top-banner" id="topBanner">
+          <div class="spark s1"></div>
+          <span id="topWordOut">NOVIDADE</span>
+          <div class="spark s2"></div>
+        </div>
+        <div class="main-word" id="mainWordOut">
+          <div class="burst left"></div>
+          CHEGOU!
+          <div class="burst right"></div>
+        </div>
+        <svg class="swoosh" viewBox="0 0 220 14"><path d="M2 10 Q60 -2 218 8" stroke="#FFC72C" stroke-width="5" fill="none" stroke-linecap="round"/></svg>
+      </div>
+
+      <div class="photo-stage" id="photoStage">
+        <div class="photo-slot" id="slot1">
+          <div class="photo-placeholder" id="photoPlaceholder1">A foto do produto<br>vai aparecer aqui</div>
+        </div>
+        <div class="photo-slot" id="slot2" style="display:none;">
+          <div class="photo-placeholder" id="photoPlaceholder2">A foto do produto 2<br>vai aparecer aqui</div>
+        </div>
+      </div>
+
+      <div class="name-row" id="nameRow">
+        <div class="name-col"><div class="name-pill" id="namePill1">Nome do Produto</div></div>
+        <div class="name-col" id="nameCol2" style="display:none;"><div class="name-pill" id="namePill2">Nome do Produto 2</div></div>
+      </div>
+      <div class="price-row" id="priceRow">
+        <div class="price-col"><div class="price-tag" id="priceTag1" style="display:none;"></div></div>
+        <div class="price-col" id="priceCol2" style="display:none;"><div class="price-tag" id="priceTag2" style="display:none;"></div></div>
+      </div>
+      <div class="desc-text" id="descOut"></div>
+
+      <div class="footer-bar">
+        <div class="region" id="regionOut">Paraná · Ambev</div>
+        <div class="date" id="dateOut"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const $ = (id) => document.getElementById(id);
+
+  const today = new Date();
+  const dd = String(today.getDate()).padStart(2,'0');
+  const mm = String(today.getMonth()+1).padStart(2,'0');
+  const yyyy = today.getFullYear();
+  $('dateInput').value = `${dd}/${mm}/${yyyy}`;
+
+  let productCount = 1;
+
+  function priceTagHTML(ttv, ttc) {
+    let html = '';
+    if (ttv) html += `<span class="price-line"><span class="price-label">TTV</span> <span class="price-currency">R$</span> ${ttv}</span>`;
+    if (ttc) html += `<span class="price-line"><span class="price-label">TTC</span> <span class="price-currency">R$</span> ${ttc}</span>`;
+    return html;
+  }
+
+  function cleanPrice(v) {
+    return v.trim().replace(/^r\$\s*/i, '');
+  }
+
+  function fitPillText(el) {
+    const isTwo = productCount === 2;
+    const maxFont = isTwo ? 16 : 21;
+    const minFont = isTwo ? 10 : 12;
+    const colWidth = el.parentElement.clientWidth || 660;
+    const maxPx = Math.max(colWidth - 24, 60);
+    let fs = maxFont;
+    el.style.fontSize = fs + 'px';
+    while (fs > minFont && el.scrollWidth > maxPx) {
+      fs -= 1;
+      el.style.fontSize = fs + 'px';
+    }
+  }
+
+  function sync() {
+    $('topWordOut').textContent = $('topWord').value || 'NOVIDADE';
+
+    const mainWordEl = $('mainWordOut');
+    const bl = mainWordEl.querySelector('.burst.left');
+    const br = mainWordEl.querySelector('.burst.right');
+    mainWordEl.childNodes.forEach(n => { if (n.nodeType === 3) n.textContent = ''; });
+    mainWordEl.textContent = $('mainWord').value || 'CHEGOU!';
+    mainWordEl.appendChild(bl);
+    mainWordEl.appendChild(br);
+
+    $('namePill1').textContent = $('nameInput').value || 'Nome do Produto';
+    $('namePill2').textContent = $('nameInput2').value || 'Nome do Produto 2';
+    fitPillText($('namePill1'));
+    fitPillText($('namePill2'));
+    $('descOut').textContent = $('descInput').value || '';
+    $('regionOut').textContent = $('regionInput').value || '';
+    $('dateOut').textContent = $('dateInput').value || '';
+
+    const ttv1 = cleanPrice($('ttvInput').value);
+    const ttc1 = cleanPrice($('ttcInput').value);
+    const tag1 = $('priceTag1');
+    tag1.innerHTML = priceTagHTML(ttv1, ttc1);
+    tag1.style.display = (ttv1 || ttc1) ? 'block' : 'none';
+
+    const ttv2 = cleanPrice($('ttvInput2').value);
+    const ttc2 = cleanPrice($('ttcInput2').value);
+    const tag2 = $('priceTag2');
+    tag2.innerHTML = priceTagHTML(ttv2, ttc2);
+    tag2.style.display = (productCount === 2 && (ttv2 || ttc2)) ? 'block' : 'none';
+  }
+
+  ['topWord','mainWord','nameInput','nameInput2','descInput','regionInput','dateInput','ttvInput','ttcInput','ttvInput2','ttcInput2'].forEach(id => {
+    $(id).addEventListener('input', sync);
+  });
+
+  function setProductCount(count) {
+    productCount = count;
+    const isTwo = count === 2;
+
+    $('countBtn1').classList.toggle('active', !isTwo);
+    $('countBtn2').classList.toggle('active', isTwo);
+    $('product2Fields').style.display = isTwo ? 'block' : 'none';
+
+    $('slot2').style.display = isTwo ? 'flex' : 'none';
+    $('photoStage').classList.toggle('two', isTwo);
+
+    $('nameCol2').style.display = isTwo ? 'flex' : 'none';
+    $('priceCol2').style.display = isTwo ? 'flex' : 'none';
+    $('nameRow').classList.toggle('two', isTwo);
+    $('priceRow').classList.toggle('two', isTwo);
+
+    sync();
+  }
+
+  $('countBtn1').addEventListener('click', () => setProductCount(1));
+  $('countBtn2').addEventListener('click', () => setProductCount(2));
+
+  document.querySelectorAll('.swatch').forEach(sw => {
+    sw.addEventListener('click', () => {
+      document.querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));
+      sw.classList.add('active');
+      const color = sw.dataset.color;
+      const deep = sw.dataset.deep;
+      document.documentElement.style.setProperty('--gold', color);
+      document.documentElement.style.setProperty('--gold-deep', deep);
+    });
+  });
+
+  function bindPhotoInput(inputId, slotId, placeholderText) {
+    $(inputId).addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        $(slotId).innerHTML = `<img src="${ev.target.result}" alt="Produto">`;
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+  bindPhotoInput('photoInput', 'slot1');
+  bindPhotoInput('photoInput2', 'slot2');
+
+  $('downloadBtn').addEventListener('click', async () => {
+    const btn = $('downloadBtn');
+    btn.textContent = 'Gerando imagem...';
+    btn.disabled = true;
+    try {
+      const canvas = await html2canvas($('card'), { scale: 2, backgroundColor: null, useCORS: true });
+      const link = document.createElement('a');
+      const safeName = ($('nameInput').value || 'novidade').trim().replace(/[^a-z0-9]+/gi,'_').toLowerCase();
+      link.download = `comunicado_${safeName || 'novidade'}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    } catch (err) {
+      alert('Não foi possível gerar a imagem. Tente novamente.');
+      console.error(err);
+    } finally {
+      btn.textContent = 'Baixar imagem (PNG)';
+      btn.disabled = false;
+    }
+  });
+
+  sync();
+</script>
+</body>
+</html>
