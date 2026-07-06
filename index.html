@@ -222,14 +222,11 @@
   }
   .top-banner span { display: inline-block; transform: skewX(8deg) rotate(2.5deg); }
 
-  .spark {
-    position: absolute;
-    width: 26px; height: 26px;
-    background: var(--gold);
-    clip-path: polygon(50% 0%, 61% 35%, 100% 50%, 61% 65%, 50% 100%, 39% 65%, 0% 50%, 39% 35%);
-  }
+  .spark { position: absolute; width: 26px; height: 26px; }
+  .spark svg { width: 100%; height: 100%; display: block; }
   .spark.s1 { top: -6px; left: -14px; transform: rotate(-10deg) scale(0.8); }
   .spark.s2 { bottom: -10px; right: -16px; transform: rotate(18deg) scale(0.65); }
+  .star-fill { fill: var(--gold); }
 
   .main-word {
     font-family: 'Anton', sans-serif;
@@ -252,11 +249,10 @@
   .burst {
     position: absolute;
     width: 30px; height: 30px;
-    background: var(--gold);
-    clip-path: polygon(50% 0%, 61% 35%, 100% 50%, 61% 65%, 50% 100%, 39% 65%, 0% 50%, 39% 35%);
     top: 50%;
     transform: translateY(-50%) rotate(8deg);
   }
+  .burst svg { width: 100%; height: 100%; display: block; }
   .burst.left { left: -8px; }
   .burst.right { right: -8px; }
 
@@ -289,10 +285,12 @@
     justify-content: center;
     position: relative;
   }
-  .photo-slot img {
+  .photo-fill {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
   }
   .photo-placeholder {
     color: #b9b2a0;
@@ -516,14 +514,14 @@
 
       <div class="headline">
         <div class="top-banner" id="topBanner">
-          <div class="spark s1"></div>
+          <div class="spark s1"><svg viewBox="0 0 100 100"><polygon class="star-fill" points="50,0 61,35 100,50 61,65 50,100 39,65 0,50 39,35"></polygon></svg></div>
           <span id="topWordOut">NOVIDADE</span>
-          <div class="spark s2"></div>
+          <div class="spark s2"><svg viewBox="0 0 100 100"><polygon class="star-fill" points="50,0 61,35 100,50 61,65 50,100 39,65 0,50 39,35"></polygon></svg></div>
         </div>
         <div class="main-word" id="mainWordOut">
-          <div class="burst left"></div>
+          <div class="burst left"><svg viewBox="0 0 100 100"><polygon class="star-fill" points="50,0 61,35 100,50 61,65 50,100 39,65 0,50 39,35"></polygon></svg></div>
           CHEGOU!
-          <div class="burst right"></div>
+          <div class="burst right"><svg viewBox="0 0 100 100"><polygon class="star-fill" points="50,0 61,35 100,50 61,65 50,100 39,65 0,50 39,35"></polygon></svg></div>
         </div>
         <svg class="swoosh" viewBox="0 0 220 14"><path d="M2 10 Q60 -2 218 8" stroke="#FFC72C" stroke-width="5" fill="none" stroke-linecap="round"/></svg>
       </div>
@@ -666,7 +664,7 @@
       if (!file) return;
       const reader = new FileReader();
       reader.onload = (ev) => {
-        $(slotId).innerHTML = `<img src="${ev.target.result}" alt="Produto">`;
+        $(slotId).innerHTML = `<div class="photo-fill" style="background-image:url('${ev.target.result}')"></div>`;
       };
       reader.readAsDataURL(file);
     });
