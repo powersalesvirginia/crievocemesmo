@@ -301,6 +301,9 @@
     font-weight: 600;
   }
   .photo-stage.two .photo-placeholder { font-size: 13px; padding: 0 12px; }
+  .photo-stage.three .photo-placeholder { font-size: 11px; padding: 0 8px; }
+  .photo-stage.four .photo-placeholder { font-size: 10px; padding: 0 6px; }
+  .photo-stage.three, .photo-stage.four { gap: 10px; }
 
   /* --- name pills over bottom of the stage --- */
   .name-row {
@@ -311,6 +314,7 @@
     gap: 16px;
     z-index: 4;
   }
+  .name-row.three, .name-row.four { gap: 10px; }
   .name-col {
     flex: 1;
     min-width: 0;
@@ -337,6 +341,14 @@
     font-size: 16px;
     padding: 8px 18px;
   }
+  .name-row.three .name-pill {
+    font-size: 13px;
+    padding: 6px 12px;
+  }
+  .name-row.four .name-pill {
+    font-size: 11px;
+    padding: 5px 9px;
+  }
 
   /* --- price tags --- */
   .price-row {
@@ -347,6 +359,7 @@
     gap: 16px;
     z-index: 4;
   }
+  .price-row.three, .price-row.four { gap: 10px; }
   .price-col {
     flex: 1;
     min-width: 0;
@@ -383,6 +396,16 @@
     margin: 0 1px;
   }
   .price-row.two .price-tag { font-size: 14px; padding: 6px 13px; }
+  .price-row.three .price-tag,
+  .price-row.four .price-tag {
+    padding: 5px 10px;
+  }
+  .price-row.three .price-tag { font-size: 11px; }
+  .price-row.four .price-tag { font-size: 10px; }
+  .price-row.three .price-tag .price-line,
+  .price-row.four .price-tag .price-line { display: inline; }
+  .price-row.three .price-tag .price-line + .price-line,
+  .price-row.four .price-tag .price-line + .price-line { margin-left: 6px; }
 
   .desc-text {
     position: absolute;
@@ -419,6 +442,100 @@
     color: rgba(255,255,255,0.65);
     font-size: 12px;
   }
+
+  /* ================= LANDSCAPE (16:9) FORMAT ================= */
+  #card.landscape { aspect-ratio: 16 / 9; }
+
+  #card.landscape .brand-logo {
+    top: 8px; left: 14px; width: 78px;
+  }
+  #card.landscape .brand-logo-right {
+    top: 10px; right: 14px; width: 56px;
+  }
+
+  #card.landscape .headline {
+    top: 6px;
+  }
+  #card.landscape .top-banner {
+    font-size: 15px;
+    padding: 4px 16px 5px;
+  }
+  #card.landscape .main-word {
+    font-size: 26px;
+    margin-top: 2px;
+    -webkit-text-stroke: 1.2px var(--blue-deep);
+  }
+  #card.landscape .spark { width: 14px; height: 14px; }
+  #card.landscape .burst { width: 16px; height: 16px; }
+  #card.landscape .swoosh {
+    width: 90px;
+    height: 6px;
+    margin-top: 3px;
+  }
+
+  #card.landscape .photo-stage {
+    left: 24px; right: 24px;
+    top: 70px; bottom: 102px;
+    gap: 10px;
+  }
+  #card.landscape .photo-slot {
+    border-radius: 16px;
+    border-width: 3px;
+  }
+  #card.landscape .photo-placeholder {
+    font-size: 11px;
+    padding: 0 10px;
+  }
+
+  #card.landscape .name-row {
+    left: 24px; right: 24px;
+    bottom: 67px;
+    gap: 10px;
+  }
+  #card.landscape .name-pill {
+    font-size: 15px;
+    padding: 6px 16px;
+  }
+  #card.landscape .name-row.two .name-pill {
+    font-size: 12px;
+    padding: 5px 12px;
+  }
+  #card.landscape .name-row.three .name-pill {
+    font-size: 10px;
+    padding: 4px 9px;
+  }
+  #card.landscape .name-row.four .name-pill {
+    font-size: 9px;
+    padding: 3px 7px;
+  }
+
+  #card.landscape .price-row {
+    left: 24px; right: 24px;
+    bottom: 33px;
+    gap: 10px;
+  }
+  #card.landscape .price-tag {
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 8px;
+  }
+  #card.landscape .price-tag .price-line { display: inline; }
+  #card.landscape .price-tag .price-line + .price-line { margin-left: 8px; }
+  #card.landscape .price-row.two .price-tag { font-size: 10px; padding: 3px 8px; }
+  #card.landscape .price-row.two .price-tag .price-line + .price-line { margin-left: 5px; }
+  #card.landscape .price-row.three .price-tag,
+  #card.landscape .price-row.four .price-tag { font-size: 8px; padding: 2px 6px; }
+  #card.landscape .price-row.three .price-tag .price-line + .price-line,
+  #card.landscape .price-row.four .price-tag .price-line + .price-line { margin-left: 3px; }
+
+  #card.landscape .desc-text { display: none; }
+
+  #card.landscape .footer-bar {
+    height: 30px;
+    padding: 0 20px;
+  }
+  #card.landscape .footer-bar .region { font-size: 11px; }
+  #card.landscape .footer-bar .date { font-size: 10px; }
 </style>
 </head>
 <body>
@@ -428,10 +545,18 @@
     <h1>Comunicado de Novidade</h1>
     <p class="subtitle">Preencha os campos → a arte à direita atualiza sozinha → baixe e envie no grupo.</p>
 
-    <label>Quantidade de produtos</label>
+    <label>Formato da arte</label>
     <div class="count-toggle">
-      <button type="button" class="count-btn active" id="countBtn1" data-count="1">1 produto</button>
-      <button type="button" class="count-btn" id="countBtn2" data-count="2">2 produtos</button>
+      <button type="button" class="count-btn active" id="formatBtn1" data-format="portrait">Vertical</button>
+      <button type="button" class="count-btn" id="formatBtn2" data-format="landscape">16:9</button>
+    </div>
+
+    <label>Quantidade de produtos</label>
+    <div class="count-toggle count-toggle-4">
+      <button type="button" class="count-btn active" id="countBtn1" data-count="1">1</button>
+      <button type="button" class="count-btn" id="countBtn2" data-count="2">2</button>
+      <button type="button" class="count-btn" id="countBtn3" data-count="3">3</button>
+      <button type="button" class="count-btn" id="countBtn4" data-count="4">4</button>
     </div>
 
     <label>Foto do produto 1</label>
@@ -470,6 +595,48 @@
         <div>
           <label>TTC (venda ao consumidor)</label>
           <input type="text" id="ttcInput2" placeholder="0,00">
+        </div>
+      </div>
+    </div>
+
+    <div id="product3Fields" style="display:none;">
+      <label>Foto do produto 3</label>
+      <div class="file-drop">
+        <input type="file" id="photoInput3" accept="image/*">
+      </div>
+
+      <label>Nome do produto 3</label>
+      <input type="text" id="nameInput3" placeholder="Ex: Skol Beats 269ml" value="Nome do Produto 3">
+
+      <div class="price-fields">
+        <div>
+          <label>TTV (venda p/ cliente)</label>
+          <input type="text" id="ttvInput3" placeholder="0,00">
+        </div>
+        <div>
+          <label>TTC (venda ao consumidor)</label>
+          <input type="text" id="ttcInput3" placeholder="0,00">
+        </div>
+      </div>
+    </div>
+
+    <div id="product4Fields" style="display:none;">
+      <label>Foto do produto 4</label>
+      <div class="file-drop">
+        <input type="file" id="photoInput4" accept="image/*">
+      </div>
+
+      <label>Nome do produto 4</label>
+      <input type="text" id="nameInput4" placeholder="Ex: Original 269ml" value="Nome do Produto 4">
+
+      <div class="price-fields">
+        <div>
+          <label>TTV (venda p/ cliente)</label>
+          <input type="text" id="ttvInput4" placeholder="0,00">
+        </div>
+        <div>
+          <label>TTC (venda ao consumidor)</label>
+          <input type="text" id="ttcInput4" placeholder="0,00">
         </div>
       </div>
     </div>
@@ -533,15 +700,25 @@
         <div class="photo-slot" id="slot2" style="display:none;">
           <div class="photo-placeholder" id="photoPlaceholder2">A foto do produto 2<br>vai aparecer aqui</div>
         </div>
+        <div class="photo-slot" id="slot3" style="display:none;">
+          <div class="photo-placeholder" id="photoPlaceholder3">A foto do produto 3<br>vai aparecer aqui</div>
+        </div>
+        <div class="photo-slot" id="slot4" style="display:none;">
+          <div class="photo-placeholder" id="photoPlaceholder4">A foto do produto 4<br>vai aparecer aqui</div>
+        </div>
       </div>
 
       <div class="name-row" id="nameRow">
         <div class="name-col"><div class="name-pill" id="namePill1">Nome do Produto</div></div>
         <div class="name-col" id="nameCol2" style="display:none;"><div class="name-pill" id="namePill2">Nome do Produto 2</div></div>
+        <div class="name-col" id="nameCol3" style="display:none;"><div class="name-pill" id="namePill3">Nome do Produto 3</div></div>
+        <div class="name-col" id="nameCol4" style="display:none;"><div class="name-pill" id="namePill4">Nome do Produto 4</div></div>
       </div>
       <div class="price-row" id="priceRow">
         <div class="price-col"><div class="price-tag" id="priceTag1" style="display:none;"></div></div>
         <div class="price-col" id="priceCol2" style="display:none;"><div class="price-tag" id="priceTag2" style="display:none;"></div></div>
+        <div class="price-col" id="priceCol3" style="display:none;"><div class="price-tag" id="priceTag3" style="display:none;"></div></div>
+        <div class="price-col" id="priceCol4" style="display:none;"><div class="price-tag" id="priceTag4" style="display:none;"></div></div>
       </div>
       <div class="desc-text" id="descOut"></div>
 
@@ -563,6 +740,7 @@
   $('dateInput').value = `${dd}/${mm}/${yyyy}`;
 
   let productCount = 1;
+  let cardFormat = 'portrait';
 
   function priceTagHTML(ttv, ttc) {
     let html = '';
@@ -576,9 +754,12 @@
   }
 
   function fitPillText(el) {
-    const isTwo = productCount === 2;
-    const maxFont = isTwo ? 16 : 21;
-    const minFont = isTwo ? 10 : 12;
+    const isLandscape = cardFormat === 'landscape';
+    const fontTable = {
+      portrait:  { 1: [21, 12], 2: [16, 10], 3: [13, 9], 4: [11, 8] },
+      landscape: { 1: [15, 10], 2: [12, 8],  3: [10, 7], 4: [9, 7] }
+    };
+    const [maxFont, minFont] = (fontTable[isLandscape ? 'landscape' : 'portrait'][productCount]) || [14, 9];
     const colWidth = el.parentElement.clientWidth || 660;
     const maxPx = Math.max(colWidth - 24, 60);
     let fs = maxFont;
@@ -600,52 +781,81 @@
     mainWordEl.appendChild(bl);
     mainWordEl.appendChild(br);
 
-    $('namePill1').textContent = $('nameInput').value || 'Nome do Produto';
-    $('namePill2').textContent = $('nameInput2').value || 'Nome do Produto 2';
-    fitPillText($('namePill1'));
-    fitPillText($('namePill2'));
     $('descOut').textContent = $('descInput').value || '';
     $('regionOut').textContent = $('regionInput').value || '';
     $('dateOut').textContent = $('dateInput').value || '';
 
-    const ttv1 = cleanPrice($('ttvInput').value);
-    const ttc1 = cleanPrice($('ttcInput').value);
-    const tag1 = $('priceTag1');
-    tag1.innerHTML = priceTagHTML(ttv1, ttc1);
-    tag1.style.display = (ttv1 || ttc1) ? 'block' : 'none';
+    for (let i = 1; i <= 4; i++) {
+      const suf = i === 1 ? '' : String(i);
+      const namePill = $('namePill' + i);
+      const nameInputEl = $('nameInput' + suf);
+      namePill.textContent = nameInputEl.value || ('Nome do Produto' + (i === 1 ? '' : ' ' + i));
+      fitPillText(namePill);
 
-    const ttv2 = cleanPrice($('ttvInput2').value);
-    const ttc2 = cleanPrice($('ttcInput2').value);
-    const tag2 = $('priceTag2');
-    tag2.innerHTML = priceTagHTML(ttv2, ttc2);
-    tag2.style.display = (productCount === 2 && (ttv2 || ttc2)) ? 'block' : 'none';
+      const ttv = cleanPrice($('ttvInput' + suf).value);
+      const ttc = cleanPrice($('ttcInput' + suf).value);
+      const tag = $('priceTag' + i);
+      tag.innerHTML = priceTagHTML(ttv, ttc);
+      tag.style.display = (i <= productCount && (ttv || ttc)) ? 'block' : 'none';
+    }
   }
 
-  ['topWord','mainWord','nameInput','nameInput2','descInput','regionInput','dateInput','ttvInput','ttcInput','ttvInput2','ttcInput2'].forEach(id => {
+  const syncFieldIds = ['topWord', 'mainWord', 'descInput', 'regionInput', 'dateInput'];
+  for (let i = 1; i <= 4; i++) {
+    const suf = i === 1 ? '' : String(i);
+    syncFieldIds.push('nameInput' + suf, 'ttvInput' + suf, 'ttcInput' + suf);
+  }
+  syncFieldIds.forEach(id => {
     $(id).addEventListener('input', sync);
   });
 
   function setProductCount(count) {
     productCount = count;
-    const isTwo = count === 2;
 
-    $('countBtn1').classList.toggle('active', !isTwo);
-    $('countBtn2').classList.toggle('active', isTwo);
-    $('product2Fields').style.display = isTwo ? 'block' : 'none';
+    for (let i = 1; i <= 4; i++) {
+      const btn = $('countBtn' + i);
+      if (btn) btn.classList.toggle('active', i === count);
+    }
 
-    $('slot2').style.display = isTwo ? 'flex' : 'none';
-    $('photoStage').classList.toggle('two', isTwo);
+    for (let i = 2; i <= 4; i++) {
+      const show = i <= count;
+      $('product' + i + 'Fields').style.display = show ? 'block' : 'none';
+      $('slot' + i).style.display = show ? 'flex' : 'none';
+      $('nameCol' + i).style.display = show ? 'flex' : 'none';
+      $('priceCol' + i).style.display = show ? 'flex' : 'none';
+    }
 
-    $('nameCol2').style.display = isTwo ? 'flex' : 'none';
-    $('priceCol2').style.display = isTwo ? 'flex' : 'none';
-    $('nameRow').classList.toggle('two', isTwo);
-    $('priceRow').classList.toggle('two', isTwo);
+    const clsMap = { 1: null, 2: 'two', 3: 'three', 4: 'four' };
+    ['two', 'three', 'four'].forEach(c => {
+      $('photoStage').classList.remove(c);
+      $('nameRow').classList.remove(c);
+      $('priceRow').classList.remove(c);
+    });
+    if (clsMap[count]) {
+      $('photoStage').classList.add(clsMap[count]);
+      $('nameRow').classList.add(clsMap[count]);
+      $('priceRow').classList.add(clsMap[count]);
+    }
 
     sync();
   }
 
-  $('countBtn1').addEventListener('click', () => setProductCount(1));
-  $('countBtn2').addEventListener('click', () => setProductCount(2));
+  for (let i = 1; i <= 4; i++) {
+    const btn = $('countBtn' + i);
+    if (btn) btn.addEventListener('click', () => setProductCount(i));
+  }
+
+  function setFormat(format) {
+    cardFormat = format;
+    const isLandscape = format === 'landscape';
+    $('formatBtn1').classList.toggle('active', !isLandscape);
+    $('formatBtn2').classList.toggle('active', isLandscape);
+    $('card').classList.toggle('landscape', isLandscape);
+    sync();
+  }
+
+  $('formatBtn1').addEventListener('click', () => setFormat('portrait'));
+  $('formatBtn2').addEventListener('click', () => setFormat('landscape'));
 
   document.querySelectorAll('.swatch').forEach(sw => {
     sw.addEventListener('click', () => {
@@ -671,6 +881,8 @@
   }
   bindPhotoInput('photoInput', 'slot1');
   bindPhotoInput('photoInput2', 'slot2');
+  bindPhotoInput('photoInput3', 'slot3');
+  bindPhotoInput('photoInput4', 'slot4');
 
   $('downloadBtn').addEventListener('click', async () => {
     const btn = $('downloadBtn');
