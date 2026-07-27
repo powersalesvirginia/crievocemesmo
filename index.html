@@ -103,13 +103,6 @@
     color: var(--navy-text);
   }
 
-  .price-fields {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-  }
-  .price-fields label { margin: 18px 0 6px; }
-  .price-fields > div:first-child label { margin-top: 18px; }
 
   .swatches { display: flex; gap: 8px; margin-top: 4px; }
   .swatch {
@@ -266,7 +259,7 @@
   .photo-stage {
     position: absolute;
     left: 42px; right: 42px;
-    top: 220px; bottom: 222px;
+    top: 220px; bottom: 198px;
     display: flex;
     gap: 16px;
   }
@@ -309,7 +302,7 @@
   .name-row {
     position: absolute;
     left: 42px; right: 42px;
-    bottom: 178px;
+    bottom: 134px;
     display: flex;
     gap: 16px;
     z-index: 4;
@@ -350,75 +343,39 @@
     padding: 5px 9px;
   }
 
-  /* --- price tags --- */
-  .price-row {
+  /* --- observation per product --- */
+  .obs-row {
     position: absolute;
     left: 42px; right: 42px;
-    bottom: 96px;
+    bottom: 66px;
     display: flex;
     gap: 16px;
     z-index: 4;
   }
-  .price-row.three, .price-row.four { gap: 10px; }
-  .price-col {
+  .obs-row.three, .obs-row.four { gap: 10px; }
+  .obs-col {
     flex: 1;
     min-width: 0;
     display: flex;
     justify-content: center;
   }
-  .price-tag {
-    background: rgba(255,255,255,0.10);
-    border: 1px solid rgba(255,199,44,0.45);
-    color: #fff;
-    font-family: 'Poppins', sans-serif;
-    font-size: 17px;
+  .obs-text {
+    color: rgba(255,255,255,0.9);
     font-weight: 600;
-    padding: 7px 18px;
-    border-radius: 12px;
+    font-size: 20px;
     text-align: center;
-    line-height: 1.35;
-    white-space: nowrap;
+    line-height: 1.28;
+    white-space: normal;
+    word-break: break-word;
     max-width: 100%;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
     overflow: hidden;
-    text-overflow: ellipsis;
   }
-  .price-tag .price-line { display: block; }
-  .price-tag .price-label {
-    color: var(--gold);
-    font-weight: 800;
-    letter-spacing: 0.03em;
-    font-size: 0.82em;
-  }
-  .price-tag .price-currency {
-    color: var(--gold);
-    font-weight: 800;
-    font-size: 1.15em;
-    margin: 0 1px;
-  }
-  .price-row.two .price-tag { font-size: 14px; padding: 6px 13px; }
-  .price-row.three .price-tag,
-  .price-row.four .price-tag {
-    padding: 5px 10px;
-  }
-  .price-row.three .price-tag { font-size: 11px; }
-  .price-row.four .price-tag { font-size: 10px; }
-  .price-row.three .price-tag .price-line,
-  .price-row.four .price-tag .price-line { display: inline; }
-  .price-row.three .price-tag .price-line + .price-line,
-  .price-row.four .price-tag .price-line + .price-line { margin-left: 6px; }
-
-  .desc-text {
-    position: absolute;
-    left: 50%;
-    bottom: 62px;
-    transform: translateX(-50%);
-    color: rgba(255,255,255,0.85);
-    font-size: 14px;
-    font-weight: 500;
-    text-align: center;
-    max-width: 80%;
-    z-index: 4;
-  }
+  .obs-row.two .obs-text { font-size: 16px; }
+  .obs-row.three .obs-text { font-size: 14px; }
+  .obs-row.four .obs-text { font-size: 12px; }
 
   /* --- footer --- */
   .footer-bar {
@@ -475,7 +432,7 @@
 
   #card.landscape .photo-stage {
     left: 24px; right: 24px;
-    top: 70px; bottom: 102px;
+    top: 62px; bottom: 109px;
     gap: 10px;
   }
   #card.landscape .photo-slot {
@@ -489,7 +446,7 @@
 
   #card.landscape .name-row {
     left: 24px; right: 24px;
-    bottom: 67px;
+    bottom: 75px;
     gap: 10px;
   }
   #card.landscape .name-pill {
@@ -509,29 +466,21 @@
     padding: 3px 7px;
   }
 
-  #card.landscape .price-row {
+  #card.landscape .obs-row {
     left: 24px; right: 24px;
-    bottom: 33px;
+    bottom: 32px;
     gap: 10px;
   }
-  #card.landscape .price-tag {
-    font-size: 12px;
-    padding: 4px 12px;
-    border-radius: 8px;
+  #card.landscape .obs-text {
+    font-size: 13px;
+    line-height: 1.25;
   }
-  #card.landscape .price-tag .price-line { display: inline; }
-  #card.landscape .price-tag .price-line + .price-line { margin-left: 8px; }
-  #card.landscape .price-row.two .price-tag { font-size: 10px; padding: 3px 8px; }
-  #card.landscape .price-row.two .price-tag .price-line + .price-line { margin-left: 5px; }
-  #card.landscape .price-row.three .price-tag,
-  #card.landscape .price-row.four .price-tag { font-size: 8px; padding: 2px 6px; }
-  #card.landscape .price-row.three .price-tag .price-line + .price-line,
-  #card.landscape .price-row.four .price-tag .price-line + .price-line { margin-left: 3px; }
-
-  #card.landscape .desc-text { display: none; }
+  #card.landscape .obs-row.two .obs-text { font-size: 11px; }
+  #card.landscape .obs-row.three .obs-text,
+  #card.landscape .obs-row.four .obs-text { font-size: 9px; }
 
   #card.landscape .footer-bar {
-    height: 30px;
+    height: 24px;
     padding: 0 20px;
   }
   #card.landscape .footer-bar .region { font-size: 11px; }
@@ -566,17 +515,8 @@
 
     <label>Nome do produto 1</label>
     <input type="text" id="nameInput" placeholder="Ex: Skol Puro Malte 350ml" value="Nome do Produto">
-
-    <div class="price-fields">
-      <div>
-        <label>TTV (venda p/ cliente)</label>
-        <input type="text" id="ttvInput" placeholder="0,00">
-      </div>
-      <div>
-        <label>TTC (venda ao consumidor)</label>
-        <input type="text" id="ttcInput" placeholder="0,00">
-      </div>
-    </div>
+<label>Observação do produto 1</label>
+    <input type="text" id="obsInput" placeholder="Ex: Somente enquanto durar o estoque">
 
     <div id="product2Fields" style="display:none;">
       <label>Foto do produto 2</label>
@@ -586,17 +526,8 @@
 
       <label>Nome do produto 2</label>
       <input type="text" id="nameInput2" placeholder="Ex: Brahma Duplo Malte 350ml" value="Nome do Produto 2">
-
-      <div class="price-fields">
-        <div>
-          <label>TTV (venda p/ cliente)</label>
-          <input type="text" id="ttvInput2" placeholder="0,00">
-        </div>
-        <div>
-          <label>TTC (venda ao consumidor)</label>
-          <input type="text" id="ttcInput2" placeholder="0,00">
-        </div>
-      </div>
+<label>Observação do produto 2</label>
+      <input type="text" id="obsInput2" placeholder="Ex: Somente enquanto durar o estoque">
     </div>
 
     <div id="product3Fields" style="display:none;">
@@ -607,17 +538,8 @@
 
       <label>Nome do produto 3</label>
       <input type="text" id="nameInput3" placeholder="Ex: Skol Beats 269ml" value="Nome do Produto 3">
-
-      <div class="price-fields">
-        <div>
-          <label>TTV (venda p/ cliente)</label>
-          <input type="text" id="ttvInput3" placeholder="0,00">
-        </div>
-        <div>
-          <label>TTC (venda ao consumidor)</label>
-          <input type="text" id="ttcInput3" placeholder="0,00">
-        </div>
-      </div>
+<label>Observação do produto 3</label>
+      <input type="text" id="obsInput3" placeholder="Ex: Somente enquanto durar o estoque">
     </div>
 
     <div id="product4Fields" style="display:none;">
@@ -628,17 +550,8 @@
 
       <label>Nome do produto 4</label>
       <input type="text" id="nameInput4" placeholder="Ex: Original 269ml" value="Nome do Produto 4">
-
-      <div class="price-fields">
-        <div>
-          <label>TTV (venda p/ cliente)</label>
-          <input type="text" id="ttvInput4" placeholder="0,00">
-        </div>
-        <div>
-          <label>TTC (venda ao consumidor)</label>
-          <input type="text" id="ttcInput4" placeholder="0,00">
-        </div>
-      </div>
+<label>Observação do produto 4</label>
+      <input type="text" id="obsInput4" placeholder="Ex: Somente enquanto durar o estoque">
     </div>
 
     <label>Palavra do banner (topo)</label>
@@ -646,9 +559,6 @@
 
     <label>Palavra principal</label>
     <input type="text" id="mainWord" value="CHEGOU!" maxlength="16">
-
-    <label>Descrição curta (opcional)</label>
-    <textarea id="descInput" placeholder="Ex: Já disponível para pedido no seu distribuidor."></textarea>
 
     <label>Região / time (rodapé esquerdo)</label>
     <input type="text" id="regionInput" value="Paraná · Ambev">
@@ -714,13 +624,12 @@
         <div class="name-col" id="nameCol3" style="display:none;"><div class="name-pill" id="namePill3">Nome do Produto 3</div></div>
         <div class="name-col" id="nameCol4" style="display:none;"><div class="name-pill" id="namePill4">Nome do Produto 4</div></div>
       </div>
-      <div class="price-row" id="priceRow">
-        <div class="price-col"><div class="price-tag" id="priceTag1" style="display:none;"></div></div>
-        <div class="price-col" id="priceCol2" style="display:none;"><div class="price-tag" id="priceTag2" style="display:none;"></div></div>
-        <div class="price-col" id="priceCol3" style="display:none;"><div class="price-tag" id="priceTag3" style="display:none;"></div></div>
-        <div class="price-col" id="priceCol4" style="display:none;"><div class="price-tag" id="priceTag4" style="display:none;"></div></div>
+      <div class="obs-row" id="obsRow">
+        <div class="obs-col"><div class="obs-text" id="obsText1"></div></div>
+        <div class="obs-col" id="obsCol2" style="display:none;"><div class="obs-text" id="obsText2"></div></div>
+        <div class="obs-col" id="obsCol3" style="display:none;"><div class="obs-text" id="obsText3"></div></div>
+        <div class="obs-col" id="obsCol4" style="display:none;"><div class="obs-text" id="obsText4"></div></div>
       </div>
-      <div class="desc-text" id="descOut"></div>
 
       <div class="footer-bar">
         <div class="region" id="regionOut">Paraná · Ambev</div>
@@ -742,15 +651,15 @@
   let productCount = 1;
   let cardFormat = 'portrait';
 
-  function priceTagHTML(ttv, ttc) {
-    let html = '';
-    if (ttv) html += `<span class="price-line"><span class="price-label">TTV</span> <span class="price-currency">R$</span> ${ttv}</span>`;
-    if (ttc) html += `<span class="price-line"><span class="price-label">TTC</span> <span class="price-currency">R$</span> ${ttc}</span>`;
-    return html;
-  }
-
-  function cleanPrice(v) {
-    return v.trim().replace(/^r\$\s*/i, '');
+  function fitTextToWidth(el, maxFont, minFont) {
+    const colWidth = el.parentElement.clientWidth || 660;
+    const maxPx = Math.max(colWidth - 24, 60);
+    let fs = maxFont;
+    el.style.fontSize = fs + 'px';
+    while (fs > minFont && el.scrollWidth > maxPx) {
+      fs -= 1;
+      el.style.fontSize = fs + 'px';
+    }
   }
 
   function fitPillText(el) {
@@ -760,14 +669,17 @@
       landscape: { 1: [15, 10], 2: [12, 8],  3: [10, 7], 4: [9, 7] }
     };
     const [maxFont, minFont] = (fontTable[isLandscape ? 'landscape' : 'portrait'][productCount]) || [14, 9];
-    const colWidth = el.parentElement.clientWidth || 660;
-    const maxPx = Math.max(colWidth - 24, 60);
-    let fs = maxFont;
+    fitTextToWidth(el, maxFont, minFont);
+  }
+
+  function fitObsText(el) {
+    const isLandscape = cardFormat === 'landscape';
+    const sizeTable = {
+      portrait:  { 1: 20, 2: 16, 3: 14, 4: 12 },
+      landscape: { 1: 13, 2: 11, 3: 9,  4: 8 }
+    };
+    const fs = (sizeTable[isLandscape ? 'landscape' : 'portrait'][productCount]) || 14;
     el.style.fontSize = fs + 'px';
-    while (fs > minFont && el.scrollWidth > maxPx) {
-      fs -= 1;
-      el.style.fontSize = fs + 'px';
-    }
   }
 
   function sync() {
@@ -781,7 +693,6 @@
     mainWordEl.appendChild(bl);
     mainWordEl.appendChild(br);
 
-    $('descOut').textContent = $('descInput').value || '';
     $('regionOut').textContent = $('regionInput').value || '';
     $('dateOut').textContent = $('dateInput').value || '';
 
@@ -792,18 +703,18 @@
       namePill.textContent = nameInputEl.value || ('Nome do Produto' + (i === 1 ? '' : ' ' + i));
       fitPillText(namePill);
 
-      const ttv = cleanPrice($('ttvInput' + suf).value);
-      const ttc = cleanPrice($('ttcInput' + suf).value);
-      const tag = $('priceTag' + i);
-      tag.innerHTML = priceTagHTML(ttv, ttc);
-      tag.style.display = (i <= productCount && (ttv || ttc)) ? 'block' : 'none';
+      const obsVal = $('obsInput' + suf).value.trim();
+      const obsText = $('obsText' + i);
+      obsText.textContent = obsVal;
+      obsText.style.display = (i <= productCount && obsVal) ? '-webkit-box' : 'none';
+      if (obsVal) fitObsText(obsText);
     }
   }
 
-  const syncFieldIds = ['topWord', 'mainWord', 'descInput', 'regionInput', 'dateInput'];
+  const syncFieldIds = ['topWord', 'mainWord', 'regionInput', 'dateInput'];
   for (let i = 1; i <= 4; i++) {
     const suf = i === 1 ? '' : String(i);
-    syncFieldIds.push('nameInput' + suf, 'ttvInput' + suf, 'ttcInput' + suf);
+    syncFieldIds.push('nameInput' + suf, 'obsInput' + suf);
   }
   syncFieldIds.forEach(id => {
     $(id).addEventListener('input', sync);
@@ -822,19 +733,19 @@
       $('product' + i + 'Fields').style.display = show ? 'block' : 'none';
       $('slot' + i).style.display = show ? 'flex' : 'none';
       $('nameCol' + i).style.display = show ? 'flex' : 'none';
-      $('priceCol' + i).style.display = show ? 'flex' : 'none';
+      $('obsCol' + i).style.display = show ? 'flex' : 'none';
     }
 
     const clsMap = { 1: null, 2: 'two', 3: 'three', 4: 'four' };
     ['two', 'three', 'four'].forEach(c => {
       $('photoStage').classList.remove(c);
       $('nameRow').classList.remove(c);
-      $('priceRow').classList.remove(c);
+      $('obsRow').classList.remove(c);
     });
     if (clsMap[count]) {
       $('photoStage').classList.add(clsMap[count]);
       $('nameRow').classList.add(clsMap[count]);
-      $('priceRow').classList.add(clsMap[count]);
+      $('obsRow').classList.add(clsMap[count]);
     }
 
     sync();
